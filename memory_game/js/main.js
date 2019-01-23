@@ -25,10 +25,11 @@ var cards = [
 
 var cardsInPlay = [];
 
-function flipCard(cardId) {
-	console.log("User flipped " + cards[cardId].rank + " of " + cards[cardId].suit + ".");
-	console.log(cards[cardId].cardImage);
+function flipCard() {
+	// "this" is referencing the element containing the event listener that was just activated
+	var cardId = this.getAttribute('data-id');
 	cardsInPlay.push(cards[cardId].rank);
+	this.setAttribute('src', cards[cardId].cardImage);
 	checkForMatch();
 }
 
@@ -43,7 +44,32 @@ function checkForMatch() {
 	}
 }
 
-flipCard(0);
-flipCard(1);
+function createBoard() {
+	console.log("Function called.");
+	var gameBoard = document.getElementById('game-board');
+	for (var i = 0; i < cards.length; i++) {
+		var cardElement = document.createElement('img');
+		cardElement.setAttribute('src', 'images/back.png');
+		cardElement.setAttribute('data-id', i);
+		cardElement.addEventListener('click', flipCard);
+		document.getElementById('game-board').appendChild(cardElement);
+	}
+}
 
-// var blah = function (var1, var2) { some stuff };
+createBoard();
+
+// // TEST CODE
+// // Show queen of diamonds
+// document.getElementById('game')[0].innerHTML = '<img src="images/queen-of-diamonds.png" alt="Queen of Diamonds">';
+
+// // Variables for each card image
+// var queenOfDiamonds = document.getElementById('game')[0].innerHTML;
+// var queenOfHearts = document.getElementById('game')[1].innerHTML;
+// var kingOfDiamonds = document.getElementById('game')[2].innerHTML;
+// var kingOfHearts = document.getElementById('game')[3].innerHTML;
+
+// // Event listeners
+// element.addEventListener('click', functionToRun);
+
+// // Function
+// var flipCard()
